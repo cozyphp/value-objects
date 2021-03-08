@@ -1,0 +1,30 @@
+---
+name: build
+on: [ push, pull_request ]
+
+jobs:
+  build:
+    name: Building tests on ${{ matrix.php }} ${{ matrix.composer-flags }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [ '7.4', '8.0' ]
+        composer-flags: [ '' ]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Setup PHP Action
+        uses: shivammathur/setup-php@2.10.0
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: xdebug
+          tools: composer:v2
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest ${{ matrix.composer-flags }}
+
+      - run: composer test
