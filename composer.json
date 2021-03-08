@@ -1,0 +1,54 @@
+{
+    "name": "cozy/value-objects",
+    "description": "Collection of handy Value Objects",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nestor Picado",
+            "email": "info@nestorpicado.com"
+        }
+    ],
+    "keywords": [
+        "value-object",
+        "valueobject",
+        "matrix",
+        "language"
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "cozy/contracts": "^0.1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0",
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan-strict-rules": "^0.12",
+        "phpstan/phpstan-phpunit": "^0.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cozy\\ValueObjects\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cozy\\ValueObjects\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "phpcs": "vendor/bin/php-cs-fixer fix --dry-run --diff -vvv --allow-risky=yes --ansi",
+        "phpcs:fix": "vendor/bin/php-cs-fixer fix -vvv --allow-risky=yes --ansi",
+        "phpstan": "phpstan analyse -l max -c phpstan.neon src --ansi --memory-limit 192M",
+        "phpunit": "vendor/bin/phpunit --coverage-text",
+        "phpunit-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "test": [
+            "@phpunit",
+            "@phpstan",
+            "@phpcs"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
