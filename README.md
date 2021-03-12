@@ -2,9 +2,10 @@ Cozy Value Objects
 ============
 
 [![Author](http://img.shields.io/badge/author-@npicado-blue.svg)](https://github.com/npicado)
-[![Code Climate](https://codeclimate.com/github/cozyphp/value-objects/badges/gpa.svg)](https://codeclimate.com/github/cozyphp/value-objects)
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/cozy/value-objects)
+[![Maintainability](https://api.codeclimate.com/v1/badges/5319ebee60e9379619b7/maintainability)](https://codeclimate.com/github/cozyphp/value-objects/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/5319ebee60e9379619b7/test_coverage)](https://codeclimate.com/github/cozyphp/value-objects/test_coverage)
 [![Build](https://github.com/cozyphp/value-objects/workflows/build/badge.svg)](https://github.com/cozyphp/value-objects/actions?query=workflow%3A%22build%22)
-[![Code Climate issues](https://img.shields.io/codeclimate/issues/cozyphp/value-objects)](https://codeclimate.com/github/cozyphp/value-objects)
 [![Latest Stable Version](https://poser.pugx.org/cozy/value-objects/v)](https://packagist.org/packages/cozy/value-objects)
 [![Software License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
