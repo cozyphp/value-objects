@@ -3,8 +3,8 @@ name: build
 on: [ push, pull_request ]
 
 jobs:
-  build:
-    name: Building tests on ${{ matrix.php }} ${{ matrix.composer-flags }}
+  test:
+    name: Running tests on ${{ matrix.php }} ${{ matrix.composer-flags }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -14,17 +14,41 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Setup PHP Action
+      - name: Setup PHP
         uses: shivammathur/setup-php@2.10.0
         with:
           php-version: ${{ matrix.php }}
-          coverage: xdebug
           tools: composer:v2
 
-      - name: Validate composer.json and composer.lock
+      - name: Validate composer manifest
         run: composer validate --strict
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest ${{ matrix.composer-flags }}
 
-      - run: composer test
+      - name: Run tests
+        run: composer test
+  coverage:
+    needs: [ test ]
+    name: coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@2.10.0
+        with:
+          php-version: '7.4'
+          coverage: xdebug
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest ${{ matrix.composer-flags }}
+
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.2.4
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_REPORTER_ID }}
+        with:
+          coverageCommand: composer test-coverage

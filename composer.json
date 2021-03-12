@@ -40,13 +40,13 @@
         "phpcs": "vendor/bin/php-cs-fixer fix --dry-run --diff -vvv --allow-risky=yes --ansi",
         "phpcs:fix": "vendor/bin/php-cs-fixer fix -vvv --allow-risky=yes --ansi",
         "phpstan": "phpstan analyse -l max -c phpstan.neon src --ansi --memory-limit 192M",
-        "phpunit": "vendor/bin/phpunit --coverage-text",
-        "phpunit-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "phpunit": "vendor/bin/phpunit --no-coverage",
         "test": [
             "@phpunit",
             "@phpstan",
             "@phpcs"
-        ]
+        ],
+        "test-coverage": "vendor/bin/phpunit --coverage-text  --coverage-clover build/logs/clover.xml"
     },
     "config": {
         "sort-packages": true
