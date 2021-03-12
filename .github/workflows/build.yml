@@ -30,7 +30,7 @@ jobs:
         run: composer test
   coverage:
     needs: [ test ]
-    name: coverage
+    name: Publish test coverage to Code Climate
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -47,7 +47,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest ${{ matrix.composer-flags }}
 
       - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v2.2.4
+        uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_REPORTER_ID }}
         with:
