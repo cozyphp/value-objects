@@ -103,7 +103,6 @@ class TreeStorage implements Arrayable, Equatable
 
     /**
      * Get the flatted list of the stored keys.
-     *
      */
     public function list(): array
     {

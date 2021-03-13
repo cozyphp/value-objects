@@ -318,4 +318,39 @@ class TreeStorageTest extends TestCase
 
         self::assertEquals($expected_result, $result);
     }
+
+    /**
+     * @depends testCreation
+     * @param TreeStorage $example
+     */
+    public function testEquals(TreeStorage $example): void
+    {
+        $a = new TreeStorage(
+            [
+                'key1' => 'val1',
+                'key2' => [
+                    'subkey1' => 'subvalue1',
+                    'subkey2' => 'subvalue2',
+                    'contact2' => [
+                        'first_name' => 'Nestor',
+                        'sub_name' => 'Daniel',
+                        'last_name' => 'Picado',
+                    ],
+                ],
+                'key3' => 321,
+            ]
+        );
+
+        $b = new TreeStorage(
+            [
+                'key1' => 'val1',
+                'key2' => 'val2',
+                'key3' => 321,
+            ]
+        );
+
+        self::assertTrue($example->equals($a));
+        self::assertNotTrue($example->equals($b));
+        self::assertNotTrue($example->equals(false));
+    }
 }
