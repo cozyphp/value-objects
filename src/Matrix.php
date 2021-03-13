@@ -11,6 +11,7 @@
 
 namespace Cozy\ValueObjects;
 
+use Cozy\Contracts\Arrayable;
 use Cozy\Contracts\Equatable;
 use InvalidArgumentException;
 use RuntimeException;
@@ -18,14 +19,12 @@ use RuntimeException;
 /**
  * An immutable Value Object that represents a rectangular array or table of numbers arranged in rows and columns.
  */
-class Matrix implements Equatable
+class Matrix implements Equatable, Arrayable
 {
     private array $matrix;
     private int $columnsCount;
     private int $rowsCount;
     private float $determinant;
-
-    // PRIVATE METHODS
 
     /**
      * Validate that the given row number is correct and exists within the array.
@@ -90,8 +89,6 @@ class Matrix implements Equatable
             throw new InvalidArgumentException('Matrices have mismatched dimensions');
         }
     }
-
-    // PUBLIC COMMON METHODS
 
     public function __construct(array $input, bool $validate = true)
     {
@@ -192,30 +189,41 @@ class Matrix implements Equatable
         return true;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function toArray(): array
     {
         return $this->matrix;
     }
 
+    /**
+     * Returns the number of rows in the matrix.
+     */
     public function getRowsCount(): int
     {
         return $this->rowsCount;
     }
 
+    /**
+     * Returns the number of columns in the matrix.
+     */
     public function getColumnsCount(): int
     {
         return $this->columnsCount;
     }
 
     /**
-     * Check if the matrix has only one dimension.
-     *
+     * Check if the matrix has just one row or one column.
      */
     public function isVector(): bool
     {
         return $this->columnsCount === 1 || $this->rowsCount === 1;
     }
 
+    /**
+     * Check if the matrix has the same number of rows and columns.
+     */
     public function isSquare(): bool
     {
         return $this->columnsCount === $this->rowsCount;
@@ -287,10 +295,8 @@ class Matrix implements Equatable
 
     /**
      * Returns the determinant of the matrix using the Bareiss algorithm.
-     *
-     * @return float|int
      */
-    public function getDeterminant()
+    public function getDeterminant(): float
     {
         if (isset($this->determinant)) {
             return $this->determinant;
@@ -330,12 +336,11 @@ class Matrix implements Equatable
             }
         }
 
-        return $this->determinant = $sign * $new[$this->rowsCount - 1][$this->rowsCount - 1];
+        return $this->determinant = (float) $sign * $new[$this->rowsCount - 1][$this->rowsCount - 1];
     }
 
     /**
      * Check if the matrix is not invertible.
-     *
      */
     public function isSingular(): bool
     {
@@ -417,8 +422,8 @@ class Matrix implements Equatable
      * Returns the adjoint of the matrix.
      *
      * The adjugate, classical adjoint, or adjunct of a square matrix is the transpose of its cofactor matrix.
-     * According to Wikipedia, the adjugate has sometimes been called the "adjoint", but today the "adjoint" of a
-     * matrix normally refers to its corresponding adjoint operator, which is its conjugate transpose.
+     * According to Wikipedia, the adjugate has sometimes been called the "adjoint", but today the "adjoint" of
+     * a matrix normally refers to its corresponding adjoint operator, which is its conjugate transpose.
      *
      * @throws RuntimeException
      **@link https://en.wikipedia.org/wiki/Adjugate_matrix
@@ -432,11 +437,8 @@ class Matrix implements Equatable
         return $this->cofactors()->transpose();
     }
 
-    // OPERATIONS
-
     /**
      * Returns the transpose of the matrix.
-     *
      */
     public function transpose(): self
     {
@@ -479,7 +481,6 @@ class Matrix implements Equatable
 
     /**
      * Multiplies the matrix by another matrix.
-     *
      */
     public function multiply(self $input): self
     {
@@ -506,7 +507,6 @@ class Matrix implements Equatable
 
     /**
      * Divides the matrix by another matrix.
-     *
      */
     public function divide(self $input): self
     {
@@ -617,8 +617,6 @@ class Matrix implements Equatable
     {
         return $this->sum($input, -1);
     }
-
-    // PUBLIC STATIC METHODS
 
     /**
      * Create a new matrix filled with identical values according to given dimensions.
