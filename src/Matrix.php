@@ -111,10 +111,9 @@ class Matrix implements Equatable, Arrayable
 
         if ($validate) {
             $consecutiveRowIndex = 0;
-            $columnType = null;
 
             foreach ($input as $rowIndex => $row) {
-                if (!is_numeric($rowIndex) || (int)$rowIndex !== $consecutiveRowIndex) {
+                if (!is_int($rowIndex) || $rowIndex !== $consecutiveRowIndex) {
                     throw new InvalidArgumentException(
                         "The row index [{$rowIndex}] is not a valid consecutive integer starting from 0."
                     );
@@ -138,20 +137,16 @@ class Matrix implements Equatable, Arrayable
 
                 $consecutiveColumnIndex = 0;
 
-                foreach ($row as $columnIndex => $column) {
-                    if (!is_numeric($columnIndex) || (int)$columnIndex !== $consecutiveColumnIndex) {
+                foreach ($row as $columnIndex => $cell) {
+                    if (!is_int($columnIndex) || $columnIndex !== $consecutiveColumnIndex) {
                         throw new InvalidArgumentException(
                             "The column index [{$rowIndex}][{$columnIndex}] is not a valid consecutive integer starting from 0."
                         );
                     }
 
-                    if (!isset($columnType)) {
-                        $columnType = gettype($column);
-                    }
-
-                    if (gettype($column) !== $columnType) {
+                    if (!is_int($cell) && !is_float($cell)) {
                         throw new InvalidArgumentException(
-                            "The column [{$rowIndex}][{$columnIndex}] has a different type of value."
+                            "The cell [{$rowIndex}][{$columnIndex}] does not have a numeric value."
                         );
                     }
 
@@ -344,7 +339,7 @@ class Matrix implements Equatable, Arrayable
      */
     public function isSingular(): bool
     {
-        return $this->getDeterminant() === 0;
+        return $this->getDeterminant() === (float)0;
     }
 
     /**
