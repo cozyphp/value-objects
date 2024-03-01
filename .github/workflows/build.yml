@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ '7.4', '8.0' ]
+        php: [ '7.4', '8.0', '8.1', '8.2', '8.3' ]
         composer-flags: [ '' ]
     steps:
       - name: Check out repository
@@ -26,8 +26,8 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest ${{ matrix.composer-flags }}
 
-      - name: Run tests
-        run: composer test
+      - name: Analyse and test code
+        run: composer run-script test
   coverage:
     needs: [ test ]
     name: Publish test coverage to Code Climate
