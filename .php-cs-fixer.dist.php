@@ -1,9 +1,7 @@
 <?php
 
 $header = <<<EOF
-    Cozy.ValueObjects
-
-    (c) Nestor Picado <info@nestorpicado.com>
+    Cozy Value Objects
 
     For the full copyright and license information, please view the LICENSE
     file that was distributed with this source code.
@@ -20,7 +18,7 @@ return $config->setRules(
         'array_syntax' => ['syntax' => 'short'],
         'concat_space' => ['spacing' => 'none'],
         'header_comment' => [
-            'commentType' => 'PHPDoc',
+            'comment_type' => 'PHPDoc',
             'header' => $header,
             'location' => 'after_open',
             'separate' => 'both',
@@ -28,8 +26,8 @@ return $config->setRules(
         'no_blank_lines_after_phpdoc' => true,
         'no_empty_phpdoc' => true,
         'no_empty_comment' => true,
-        'no_superfluous_phpdoc_tags' => true,
-        'no_trailing_comma_in_singleline_array' => true,
+        'no_superfluous_phpdoc_tags' => ['allow_mixed' => true],
+        'no_trailing_comma_in_singleline' => true,
         'no_unused_imports' => true,
         'ordered_imports' => ['imports_order' => ['class', 'function', 'const'], 'sort_algorithm' => 'alpha'],
         'phpdoc_add_missing_param_annotation' => ['only_untyped' => false],
